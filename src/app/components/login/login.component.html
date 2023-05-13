@@ -1,32 +1,58 @@
 <div class="mt-5">
   <div class="container">
-    <form>
+    <form [formGroup]="loginForm" (submit)="login($event)">
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Username</label>
         <input
+          formControlName="username"
           type="text"
           class="form-control"
           placeholder="Enter Username"
           id="exampleInputEmail1"
           aria-describedby="emailHelp"
         />
-        <div id="emailHelp" class="form-text text-danger">
-          We'll never share your email with anyone else.
-        </div>
+        <ng-container *ngIf="getUsername.touched">
+          <div
+            *ngIf="getUsername.hasError('required')"
+            id="emailHelp"
+            class="form-text text-danger"
+          >
+            Username is required
+          </div>
+          <div
+            *ngIf="getUsername.hasError('minlength')"
+            id="emailHelp"
+            class="form-text text-danger"
+          >
+            Username length must be greater than 3
+          </div>
+        </ng-container>
       </div>
       <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label">Password</label>
         <input
+          formControlName="password"
           type="password"
           placeholder="Enter Password"
           class="form-control"
           id="exampleInputPassword1"
         />
-        <div id="emailHelp" class="form-text text-danger">
-          We'll never share your email with anyone else.
-        </div>
+
+        <ng-container *ngIf="getPassword.touched">
+          <div
+            *ngIf="getPassword.hasError('required')"
+            id="emailHelp"
+            class="form-text text-danger"
+          >
+            Password is required
+          </div>
+        </ng-container>
+        {{ loginForm.value | json }}
       </div>
 
+      <p class="text-danger" *ngIf="loginForm.status == 'INVALID'">
+        Can't Login becaues Form Data Not Vaild
+      </p>
       <button type="submit" class="btn btn-dark">Login</button>
     </form>
   </div>
