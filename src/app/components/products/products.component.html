@@ -17,15 +17,24 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
+        <tr *ngFor="let product of products">
+          <th scope="row">{{ product.id }}</th>
+          <td>{{ product.productName }}</td>
+          <td>{{ product.price | currency }}</td>
+          <td>{{ product.quantity }}</td>
           <td>
-            <i class="fs-2 mx-1 text-info bi bi-pencil-square"></i>
-            <i class="fs-2 mx-1 text-danger bi bi-trash2-fill"></i>
-            <i class="fs-2 mx-1 text-primary bi bi-eye-fill"></i>
+            <i
+              [routerLink]="['/products', product.id, 'edit']"
+              class="fs-2 mx-1 text-info bi bi-pencil-square"
+            ></i>
+            <i
+              (click)="deleteProductHandler(product.id)"
+              class="fs-2 mx-1 text-danger bi bi-trash2-fill"
+            ></i>
+            <i
+              [routerLink]="['/products', product.id]"
+              class="fs-2 mx-1 text-primary bi bi-eye-fill"
+            ></i>
           </td>
         </tr>
       </tbody>
